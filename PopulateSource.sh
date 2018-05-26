@@ -14,13 +14,18 @@ relpath=`echo $fullpath | sed -n -e 's/^.*modules//p'`
 
 filespath="$goodpath"files"$relpath"
 
+if [ ! -f $filespath ]; then
 mkdir -p $filespath
-cp -p --parents $fullpath $filespath
+rmdir $filespath
+cp $fullpath $filespath
+fi
 
 sumpath="$goodpath"sums"$relpath"
+
+if [ ! -f $sumpath ]; then
 mkdir -p $sumpath
 rmdir $sumpath
-
+fi
 md5sum $fullpath | head -c 32 > $sumpath
 
 done
